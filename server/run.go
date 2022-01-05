@@ -10,7 +10,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func StartServer() {
+func Run() {
 	router := mux.NewRouter()
 	router.HandleFunc("/health-check", HealthCheck).Methods("GET")
 	router.HandleFunc("/discs", Discs).Methods("GET")
