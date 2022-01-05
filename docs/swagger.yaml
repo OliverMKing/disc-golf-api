@@ -1,0 +1,34 @@
+basePath: /
+definitions:
+  models.Disc:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  title: Disc Golf API
+  version: 0.0.0
+paths:
+  /discs:
+    get:
+      description: Get all discs
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Disc'
+            type: array
+      summary: Get all discs
+  /health-check:
+    get:
+      description: Get API health status
+      responses:
+        "200":
+          description: ""
+      summary: Get status of server
+swagger: "2.0"

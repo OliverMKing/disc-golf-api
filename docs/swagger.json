@@ -1,0 +1,53 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Disc Golf API",
+        "contact": {},
+        "version": "0.0.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/discs": {
+            "get": {
+                "description": "Get all discs",
+                "summary": "Get all discs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Disc"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/health-check": {
+            "get": {
+                "description": "Get API health status",
+                "summary": "Get status of server",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Disc": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
