@@ -2,10 +2,43 @@ basePath: /
 definitions:
   models.Disc:
     properties:
+      diameter:
+        $ref: '#/definitions/models.Measurement'
+      distributor:
+        type: string
+      fade:
+        type: integer
+      glide:
+        type: integer
+      height:
+        $ref: '#/definitions/models.Measurement'
       id:
         type: integer
+      maxWeight:
+        $ref: '#/definitions/models.Measurement'
       name:
         type: string
+      plasticGrades:
+        items:
+          type: string
+        type: array
+      primaryUse:
+        type: string
+      rimDepth:
+        $ref: '#/definitions/models.Measurement'
+      speed:
+        type: integer
+      stability:
+        type: string
+      turn:
+        type: integer
+    type: object
+  models.Measurement:
+    properties:
+      unit:
+        type: string
+      value:
+        type: number
     type: object
 host: localhost:8080
 info:

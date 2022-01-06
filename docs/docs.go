@@ -56,11 +56,61 @@ var doc = `{
         "models.Disc": {
             "type": "object",
             "properties": {
+                "diameter": {
+                    "$ref": "#/definitions/models.Measurement"
+                },
+                "distributor": {
+                    "type": "string"
+                },
+                "fade": {
+                    "type": "integer"
+                },
+                "glide": {
+                    "type": "integer"
+                },
+                "height": {
+                    "$ref": "#/definitions/models.Measurement"
+                },
                 "id": {
                     "type": "integer"
                 },
+                "maxWeight": {
+                    "$ref": "#/definitions/models.Measurement"
+                },
                 "name": {
                     "type": "string"
+                },
+                "plasticGrades": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "primaryUse": {
+                    "type": "string"
+                },
+                "rimDepth": {
+                    "$ref": "#/definitions/models.Measurement"
+                },
+                "speed": {
+                    "type": "integer"
+                },
+                "stability": {
+                    "type": "string"
+                },
+                "turn": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Measurement": {
+            "type": "object",
+            "properties": {
+                "unit": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
                 }
             }
         }

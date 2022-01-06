@@ -47,7 +47,7 @@ func Discs(w http.ResponseWriter, r *http.Request) {
 	zone := Disc{Name: "Zone"}
 	discs := []Disc{teebird, buzzz, zone}
 
-	resp := DiscResponse{Discs: discs}
+	resp := DiscsResponse{Discs: discs}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
