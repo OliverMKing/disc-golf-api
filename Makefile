@@ -1,6 +1,7 @@
 project_name=discgolfapitest
 build_path=bin/$(project_name)
 
+all: run
 run: docs server
 
 .PHONY: docs
