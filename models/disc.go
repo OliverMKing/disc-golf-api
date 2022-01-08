@@ -20,7 +20,3 @@ type Disc struct {
 type DiscsResponse struct {
 	Discs []Disc `json:"discs"`
 }
-
-type DiscResponse struct {
-	Disc Disc `json:"disc"`
-}
