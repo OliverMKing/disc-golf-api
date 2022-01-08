@@ -1,6 +1,8 @@
 package main
 
-import "discgolfapi.com/m/server"
+import (
+	"discgolfapi.com/m/server"
+)
 
 // @title Disc Golf API
 // @version 0.0.0

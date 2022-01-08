@@ -9,21 +9,35 @@ import (
 	. "discgolfapi.com/m/models"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/zerolog/log"
 
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 func Run() {
 	router := mux.NewRouter()
+	router.Use(loggingMiddleware)
+
+	// api routes
 	router.HandleFunc("/health-check", HealthCheck).Methods("GET")
 	router.HandleFunc("/discs", Discs).Methods("GET")
 
+	// doc routes
 	router.PathPrefix("/swagger/").Handler((httpSwagger.Handler(
 		httpSwagger.URL("doc.json"),
 	)))
 
 	http.Handle("/", router)
+	log.Info().Msg("Starting http server")
 	http.ListenAndServe(":8080", router)
+}
+
+func loggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Info().Msg(fmt.Sprintf("Received request to %s from %s", r.RequestURI, r.Host))
+
+		next.ServeHTTP(w, r)
+	})
 }
 
 // HeathCheck ... Get status of server
