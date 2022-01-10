@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	_ "discgolfapi.com/m/docs"
 	. "discgolfapi.com/m/models"
@@ -14,7 +15,7 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-func Run() {
+func GetServer() *http.Server {
 	router := mux.NewRouter()
 	router.Use(loggingMiddleware)
 
@@ -27,9 +28,13 @@ func Run() {
 		httpSwagger.URL("doc.json"),
 	)))
 
-	http.Handle("/", router)
-	log.Info().Msg("Starting http server")
-	http.ListenAndServe(":8080", router)
+	return &http.Server{
+		Addr:         "0.0.0.0:8080",
+		WriteTimeout: time.Second * 10,
+		ReadTimeout:  time.Second * 10,
+		IdleTimeout:  time.Second * 60,
+		Handler:      router,
+	}
 }
 
 func loggingMiddleware(next http.Handler) http.Handler {
