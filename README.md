@@ -1,5 +1,11 @@
 # disc-golf-api
 
+### Setup
+
+Run `go get` to install dependencies. Clone the `.env_example` file `.env`.
+
+Make sure you have [golang-migrate](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate) installed.
+
 ## Usage
 
 ### Local
@@ -10,4 +16,4 @@ Both commands can be run with a single `make run` command.
 
 ### Docker
 
-Run `docker build --tag discgolfapi .` then `docker run -p 8080:8080 discgolfapi` to build and run the image.
+Run `docker-compose up --build`.
