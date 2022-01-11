@@ -3,8 +3,6 @@ package server
 import (
 	"encoding/json"
 	"net/http"
-
-	. "discgolfapi.com/m/models"
 )
 
 // Discs ... Get all discs
@@ -13,19 +11,20 @@ import (
 // @Success 200 {array} models.Disc
 // @Router /discs [get]
 func Discs(w http.ResponseWriter, r *http.Request) {
-	teebird := Disc{Name: "Teebird"}
-	buzzz := Disc{Name: "Buzzz"}
-	zone := Disc{Name: "Zone"}
-	discs := []Disc{teebird, buzzz, zone}
-
-	resp := DiscsResponse{Discs: discs}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-
-	jsonResponse, err := json.Marshal(resp)
+	resp, err := Db.GetDiscs()
 	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
+
+	jsonResponse, err := json.Marshal(resp)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 	w.Write(jsonResponse)
 }
