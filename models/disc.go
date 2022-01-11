@@ -15,6 +15,7 @@ type Disc struct {
 	Stability     string      `json:"stability"`
 	PrimaryUse    string      `json:"primaryUse"`
 	PlasticGrades []string    `json:"plasticGrades"`
+	Link          string      `json:"link"`
 }
 
 type DiscsResponse struct {

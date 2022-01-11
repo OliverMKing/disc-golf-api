@@ -74,6 +74,9 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
+                "link": {
+                    "type": "string"
+                },
                 "maxWeight": {
                     "$ref": "#/definitions/models.Measurement"
                 },
