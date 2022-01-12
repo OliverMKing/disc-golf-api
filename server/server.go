@@ -18,7 +18,6 @@ func GetServer() *http.Server {
 	router.Use(loggingMiddleware)
 
 	// api routes
-	router.HandleFunc("/health-check", HealthCheck).Methods("GET")
 	router.HandleFunc("/discs", Discs).Methods("GET")
 
 	// doc routes
@@ -40,14 +39,4 @@ func loggingMiddleware(next http.Handler) http.Handler {
 		log.Info().Msg(fmt.Sprintf("Received request to %s from %s", r.RequestURI, r.Host))
 		next.ServeHTTP(w, r)
 	})
-}
-
-// HeathCheck ... Get status of server
-// @Summary Get status of server
-// @Description Get API health status
-// @Success 200
-// @Router /health-check [get]
-func HealthCheck(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "API is running and healthy")
 }
