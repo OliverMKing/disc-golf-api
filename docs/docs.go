@@ -23,6 +23,34 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/disc": {
+            "post": {
+                "description": "Add disc",
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "Add disc",
+                "parameters": [
+                    {
+                        "description": "Disc data",
+                        "name": "disc",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Disc"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/discs": {
             "get": {
                 "description": "Get all discs",
@@ -36,17 +64,6 @@ var doc = `{
                                 "$ref": "#/definitions/models.Disc"
                             }
                         }
-                    }
-                }
-            }
-        },
-        "/health-check": {
-            "get": {
-                "description": "Get API health status",
-                "summary": "Get status of server",
-                "responses": {
-                    "200": {
-                        "description": ""
                     }
                 }
             }

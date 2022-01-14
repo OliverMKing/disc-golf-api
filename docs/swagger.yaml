@@ -48,6 +48,24 @@ info:
   title: Disc Golf API
   version: 0.0.0
 paths:
+  /disc:
+    post:
+      consumes:
+      - application/json
+      description: Add disc
+      parameters:
+      - description: Disc data
+        in: body
+        name: disc
+        required: true
+        schema:
+          $ref: '#/definitions/models.Disc'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Add disc
   /discs:
     get:
       description: Get all discs
@@ -59,11 +77,4 @@ paths:
               $ref: '#/definitions/models.Disc'
             type: array
       summary: Get all discs
-  /health-check:
-    get:
-      description: Get API health status
-      responses:
-        "200":
-          description: ""
-      summary: Get status of server
 swagger: "2.0"

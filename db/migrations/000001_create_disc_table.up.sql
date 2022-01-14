@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS disc(
     glide SMALLINT,
     turn SMALLINT,
     fade SMALLINT,
-    stability SMALLINT,
+    stability VARCHAR(100),
     primary_use VARCHAR(50),
     plastic_grades VARCHAR(50)[],
     link VARCHAR(400),

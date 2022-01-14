@@ -18,7 +18,8 @@ func GetServer() *http.Server {
 	router.Use(loggingMiddleware)
 
 	// api routes
-	router.HandleFunc("/discs", Discs).Methods("GET")
+	router.HandleFunc("/discs", GetDiscs).Methods("GET")
+	router.HandleFunc("/discs", PutDiscs).Methods("PUT")
 
 	// doc routes
 	router.PathPrefix("/swagger/").Handler((httpSwagger.Handler(
