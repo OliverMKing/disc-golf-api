@@ -37,7 +37,7 @@ func GetServer() *http.Server {
 
 func loggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Info().Msg(fmt.Sprintf("Received request to %s from %s", r.RequestURI, r.Host))
+		log.Info().Msg(fmt.Sprintf("Received request to %s %s from %s", r.Method, r.RequestURI, r.Host))
 		next.ServeHTTP(w, r)
 	})
 }
