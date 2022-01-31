@@ -14,14 +14,12 @@ import (
 )
 
 const (
-	HOST            = "database"
-	PORT            = 5432
-	DB_PING_RETRIES = 10
+	HOST       = "database"
+	PORT       = 5432
+	DB_RETRIES = 10
 )
 
-const ERR_INT_RESP = -1
-
-var ErrNoMatch = fmt.Errorf("no matching record")
+var ErrMaxDbRetries = fmt.Errorf("Could not connect to database after %d tries", DB_RETRIES)
 
 type Database struct {
 	Conn *gorm.DB
@@ -45,33 +43,36 @@ func init() {
 func getDatabase(username string, password string, database string) (*Database, error) {
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Shanghai",
 		HOST, PORT, username, password, database)
-	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		return nil, err
-	}
-
-	db, err := conn.DB()
-	if err != nil {
-		return nil, err
-	}
 
 	sleepDuration := time.Second
-	for i := 0; i < DB_PING_RETRIES; i++ {
+	for i := 0; i < DB_RETRIES; i++ {
+		// exponential backoff retry
 		time.Sleep(sleepDuration)
+		sleepDuration *= 2
 
-		err = db.Ping()
-		if err == nil {
-			break
+		conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+		if err != nil {
+			log.Info().Msg(fmt.Sprintf("Failed to open database connection: %s", err.Error()))
+			continue
 		}
 
-		// exponential backoff retry
-		sleepDuration *= 2
-	}
-	if err != nil {
-		return nil, err
+		db, err := conn.DB()
+		if err != nil {
+			log.Info().Msg(fmt.Sprintf("Failed to connect to database: %s", err.Error()))
+			continue
+		}
+
+		err = db.Ping()
+		if err != nil {
+			log.Info().Msg(fmt.Sprintf("Failed to ping database: %s", err.Error()))
+			continue
+		}
+
+		return &Database{Conn: conn}, nil
 	}
 
-	return &Database{Conn: conn}, nil
+	return nil, ErrMaxDbRetries
+
 }
 
 func (db *Database) Migrate() error {
