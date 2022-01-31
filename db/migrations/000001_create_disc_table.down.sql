@@ -1,2 +1,0 @@
-DROP TABLE IF EXISTS disc;
-DROP TABLE IF EXISTS measurement;

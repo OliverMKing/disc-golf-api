@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"discgolfapi.com/m/database"
 	"discgolfapi.com/m/models"
 	"github.com/rs/zerolog/log"
 )
@@ -15,7 +16,7 @@ import (
 // @Success 200 {array} models.Disc
 // @Router /discs [get]
 func GetDiscs(w http.ResponseWriter, r *http.Request) {
-	discs, err := Db.GetDiscs()
+	discs, err := database.Db.GetDiscs()
 	if err != nil {
 		log.Error().Msg(fmt.Sprintf("Error when getting discs from database: %s", err.Error()))
 		w.WriteHeader(http.StatusInternalServerError)
@@ -51,7 +52,7 @@ func PutDiscs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = Db.PutDisc(disc)
+	err = database.Db.PutDisc(&disc)
 	if err != nil {
 		log.Error().Msg(fmt.Sprintf("Error when putting disc into database: %s", err.Error()))
 		w.WriteHeader(http.StatusInternalServerError)

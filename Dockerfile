@@ -1,12 +1,28 @@
-FROM golang:1.17-alpine
+ARG build_path=/go/bin/discgolfapi
+
+FROM golang:1.17-alpine as build-env
+ARG build_path
 
 WORKDIR /go/src/discgolfapi.com
+
+# cache and install dependencies
+COPY go.mod . 
+COPY go.sum .
+RUN go mod download
+
 COPY . .
-RUN apk add --update make
-RUN go get
+
+# build docs
 RUN go get -u github.com/swaggo/swag/cmd/swag
-RUN make build
+RUN swag init
 
+# build server
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o /go/bin/discgolfapi
+
+FROM scratch
+ARG build_path
+
+# run server
+COPY --from=build-env $build_path "/go/bin/discgolfapi"
 EXPOSE 8080
-
-ENTRYPOINT ["make", "run-build", "--always-make"]
+ENTRYPOINT ["/go/bin/discgolfapi"]
