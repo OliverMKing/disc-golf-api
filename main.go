@@ -14,7 +14,7 @@ import (
 // @version 0.0.0
 
 // @host localhost:8080
-// @BasePath /
+// @BasePath /api
 func main() {
 	srv := GetServer()
 

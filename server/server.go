@@ -31,7 +31,7 @@ func GetServer() *http.Server {
 	v1.HandleFunc("/discs", PutDiscs).Methods("PUT")
 
 	// doc routes
-	router.PathPrefix("/swagger/").Handler((httpSwagger.Handler(
+	router.PathPrefix("/").Handler((httpSwagger.Handler(
 		httpSwagger.URL("doc.json"),
 	)))
 
