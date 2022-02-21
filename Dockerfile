@@ -25,4 +25,4 @@ ARG build_path
 # run server
 COPY --from=build-env $build_path "/go/bin/discgolfapi"
 EXPOSE 8080
-ENTRYPOINT ["/go/bin/discgolfapi"]
+ENTRYPOINT ["/go/bin/discgolfapi", "-port=8080"]

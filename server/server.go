@@ -1,21 +1,28 @@
 package server
 
 import (
-	"fmt"
+	"flag"
 	"net/http"
 	"time"
 
 	_ "discgolfapi.com/m/docs"
+	"discgolfapi.com/m/server/middleware"
 
 	"github.com/gorilla/mux"
-	"github.com/rs/zerolog/log"
 
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
+var (
+	port = flag.String("port", "8080", "port")
+)
+
 func GetServer() *http.Server {
+	// parse flags
+	flag.Parse()
+
 	router := mux.NewRouter()
-	router.Use(loggingMiddleware)
+	router.Use(middleware.Log)
 
 	// api routes
 	router.HandleFunc("/discs", GetDiscs).Methods("GET")
@@ -27,17 +34,10 @@ func GetServer() *http.Server {
 	)))
 
 	return &http.Server{
-		Addr:         "0.0.0.0:8080",
+		Addr:         "0.0.0.0:" + *port,
 		WriteTimeout: time.Second * 10,
 		ReadTimeout:  time.Second * 10,
 		IdleTimeout:  time.Second * 60,
 		Handler:      router,
 	}
-}
-
-func loggingMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Info().Msg(fmt.Sprintf("Received request to %s %s from %s", r.Method, r.RequestURI, r.Host))
-		next.ServeHTTP(w, r)
-	})
 }
