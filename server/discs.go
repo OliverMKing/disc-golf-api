@@ -14,7 +14,7 @@ import (
 // @Summary Get all discs
 // @Description Get all discs
 // @Success 200 {array} models.Disc
-// @Router /discs [get]
+// @Router /api/v1/discs [get]
 func GetDiscs(w http.ResponseWriter, r *http.Request) {
 	discs, err := database.Db.GetDiscs()
 	if err != nil {
@@ -42,7 +42,7 @@ func GetDiscs(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Param disc body models.Disc true "Disc data"
 // @Success 200 {object} object
-// @Router /discs [PUT]
+// @Router /api/v1/discs [PUT]
 func PutDiscs(w http.ResponseWriter, r *http.Request) {
 	var disc models.Disc
 	err := json.NewDecoder(r.Body).Decode(&disc)
