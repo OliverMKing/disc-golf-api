@@ -13,8 +13,7 @@ type Disc struct {
 	Fade        int         `json:"fade"`
 	Stability   string      `json:"stability"`
 	PrimaryUse  string      `json:"primaryUse"`
-	// PlasticGrades []string    `json:"plasticGrades"`
-	Link string `json:"link"`
+	Link        string      `json:"link"`
 }
 
 type DiscsResponse struct {
