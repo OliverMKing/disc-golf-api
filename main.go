@@ -12,6 +12,7 @@ import (
 
 // @title Disc Golf API
 // @version 0.0.0
+// @description   Open-source Disc Golf API of discs and their attributes. You can view the source code [here](https://github.com/OliverMKing/disc-golf-api). Please submit any issues or feature requests [here](https://github.com/OliverMKing/disc-golf-api/issues).
 
 // @license.name  MIT License
 // @license.url   https://github.com/OliverMKing/disc-golf-api/blob/main/LICENSE
