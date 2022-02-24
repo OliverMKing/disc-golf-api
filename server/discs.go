@@ -49,6 +49,7 @@ func PutDiscs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Error().Msg(fmt.Sprintf("Error decoding disc from request: %s", err.Error()))
 		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
 		return
 	}
 
