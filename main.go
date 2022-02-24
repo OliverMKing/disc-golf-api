@@ -13,6 +13,9 @@ import (
 // @title Disc Golf API
 // @version 0.0.0
 
+// @license.name  MIT License
+// @license.url   https://github.com/OliverMKing/disc-golf-api/blob/main/LICENSE
+
 // @host localhost:8080
 // @BasePath /api
 func main() {
