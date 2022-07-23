@@ -1,5 +1,7 @@
 README.md
 LICENSE
+Makefile
+openapi.yaml
 .env_example
 .gitignore
 .env
