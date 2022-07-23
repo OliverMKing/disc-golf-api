@@ -1,11 +1,11 @@
-# disc-golf-api
+# Disc Golf API
+
+## Local Development
 
 ### Setup
 
-Run `go get` to install dependencies. Clone the `.env_example` file to `.env`.
+Clone the repository then run `go get` to install dependencies.
 
-## Usage
+### OpenAPI Generation
 
-### Docker
-
-Run `docker-compose up --build`.
+Regenerate the generated server with `make build-openapi`.
