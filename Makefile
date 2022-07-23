@@ -4,4 +4,4 @@ build-openapi:
 		-i ./curr/openapi.yaml \
 		-g go-server \
 		--additional-properties=outputAsLibrary=true \
-		-o ./curr/gen
+		-o ./curr/pgk/gen
