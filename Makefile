@@ -1,7 +1,13 @@
 
 build-openapi:
-	docker run --rm -v "/${PWD}:/curr" openapitools/openapi-generator-cli generate \
-		-i ./curr/openapi.yaml \
+	docker run --rm -v "/${PWD}:/disc-golf-api" openapitools/openapi-generator-cli generate \
+		-i ./disc-golf-api/openapi.yaml \
 		-g go-server \
 		--additional-properties=outputAsLibrary=true \
-		-o ./curr/pgk/gen
+		-o ./disc-golf-api/pkg/gen
+
+build-app:
+	docker build -t discgolfapi .
+
+run-server: build-app
+	docker run -t discgolfapi ./disc-golf-api server
