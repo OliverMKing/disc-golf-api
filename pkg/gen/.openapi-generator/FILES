@@ -1,0 +1,13 @@
+.openapi-generator-ignore
+README.md
+api/openapi.yaml
+openapi/api.go
+openapi/api_disc.go
+openapi/api_disc_service.go
+openapi/error.go
+openapi/helpers.go
+openapi/impl.go
+openapi/logger.go
+openapi/model_disc.go
+openapi/model_list_disc_200_response.go
+openapi/routers.go

@@ -1,0 +1,253 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: olivermerkleyking@gmail.com
+  description: "Open-source Disc golf api that follows OpenAPI specification. Source\
+    \ code can be found [here](https://github.com/OliverMKing/disc-golf-api)."
+  license:
+    name: MIT
+    url: https://github.com/OliverMKing/disc-golf-api/blob/main/LICENSE
+  title: Disc Golf API
+  version: 0.0.1
+externalDocs:
+  description: Report an issue
+  url: https://github.com/OliverMKing/disc-golf-api/issues
+servers:
+- url: https://discgolfapi.com/v1
+tags:
+- description: Everything about disc golf discs
+  name: disc
+paths:
+  /disc:
+    get:
+      description: "Returns a list of discs. Follows the [OData](http://docs.oasis-open.org/odata/odata-json-format/v4.0/cos01/odata-json-format-v4.0-cos01.html#_Toc372793055)\
+        \ paged responses guidelines."
+      operationId: listDisc
+      parameters:
+      - description: Allows for resources already returned to be skipped. Automatically
+          incremented through nextLink.
+        explode: true
+        in: query
+        name: skipToken
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: Maximum numbers of discs to be returned
+        explode: true
+        in: query
+        name: top
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listDisc_200_response'
+          description: Successful operation
+      security:
+      - api_key: []
+      summary: Get a paginated list of discs
+      tags:
+      - disc
+    post:
+      operationId: addDisc
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/disc'
+        description: Disc object that needs to be added to the store
+        required: true
+      responses:
+        "405":
+          content: {}
+          description: Invalid input
+      security:
+      - discstore_auth:
+        - write:discs
+        - read:discs
+      summary: Add a new disc to the store
+      tags:
+      - disc
+      x-codegen-request-body-name: body
+    put:
+      operationId: updateDisc
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/disc'
+        description: Disc object that needs to be added to the store
+        required: true
+      responses:
+        "400":
+          content: {}
+          description: Invalid ID supplied
+        "404":
+          content: {}
+          description: Disc not found
+        "405":
+          content: {}
+          description: Validation exception
+      security:
+      - discstore_auth:
+        - write:discs
+        - read:discs
+      summary: Update an existing disc
+      tags:
+      - disc
+      x-codegen-request-body-name: body
+  /disc/{discId}:
+    get:
+      description: Returns a single disc
+      operationId: getDiscById
+      parameters:
+      - description: ID of disc to return
+        explode: false
+        in: path
+        name: discId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/disc'
+          description: Successful operation
+        "400":
+          content: {}
+          description: Invalid ID supplied
+        "404":
+          content: {}
+          description: Disc not found
+      security:
+      - api_key: []
+      summary: Find disc by ID
+      tags:
+      - disc
+components:
+  schemas:
+    disc:
+      example:
+        fade: 3
+        diameter: 1.4658129805029452
+        primaryUse: Putter
+        name: Teebird3
+        id: 0
+        maxWeight: 6.027456183070403
+        glide: 7
+        turn: 9
+        distributor: Innova
+        speed: 2
+        height: 5.962133916683182
+        rimDepth: 5.637376656633329
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          example: Teebird3
+          type: string
+        distributor:
+          example: Innova
+          type: string
+        maxWeight:
+          description: Max weight in grams
+          format: double
+          type: number
+        diameter:
+          description: Diameter in centimeters
+          format: double
+          type: number
+        height:
+          description: Height in centimeters
+          format: double
+          type: number
+        rimDepth:
+          description: Rim depth in centimeters
+          format: double
+          type: number
+        speed:
+          format: int64
+          type: integer
+        glide:
+          format: int64
+          type: integer
+        turn:
+          format: int64
+          type: integer
+        fade:
+          format: int64
+          type: integer
+        primaryUse:
+          enum:
+          - Putter
+          - Mid Range
+          - Fairway Driver
+          - Distance Driver
+          type: string
+      required:
+      - distributor
+      - name
+      type: object
+    listDisc_200_response:
+      example:
+        items:
+        - fade: 3
+          diameter: 1.4658129805029452
+          primaryUse: Putter
+          name: Teebird3
+          id: 0
+          maxWeight: 6.027456183070403
+          glide: 7
+          turn: 9
+          distributor: Innova
+          speed: 2
+          height: 5.962133916683182
+          rimDepth: 5.637376656633329
+        - fade: 3
+          diameter: 1.4658129805029452
+          primaryUse: Putter
+          name: Teebird3
+          id: 0
+          maxWeight: 6.027456183070403
+          glide: 7
+          turn: 9
+          distributor: Innova
+          speed: 2
+          height: 5.962133916683182
+          rimDepth: 5.637376656633329
+        nextLink: "https://discgolfapi.com/v1/disc?skipToken={nextSkipToken}&top={top}"
+      properties:
+        nextLink:
+          description: The URL a client should use to get the next page
+          example: "https://discgolfapi.com/v1/disc?skipToken={nextSkipToken}&top={top}"
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/disc'
+          type: array
+      type: object
+  securitySchemes:
+    discstore_auth:
+      flows:
+        implicit:
+          authorizationUrl: http://discstore.swagger.io/oauth/dialog
+          scopes:
+            write:discs: modify discs in your account
+            read:discs: read your discs
+      type: oauth2
+    api_key:
+      in: header
+      name: api_key
+      type: apiKey

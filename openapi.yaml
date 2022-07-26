@@ -23,7 +23,7 @@ paths:
         - disc
       summary: Get a paginated list of discs
       description: Returns a list of discs. Follows the [OData](http://docs.oasis-open.org/odata/odata-json-format/v4.0/cos01/odata-json-format-v4.0-cos01.html#_Toc372793055) paged responses guidelines.
-      operationId: listdisc
+      operationId: listDisc
       parameters:
         - name: skipToken
           in: query
@@ -59,7 +59,7 @@ paths:
       tags:
         - disc
       summary: Update an existing disc
-      operationId: updatedisc
+      operationId: updateDisc
       requestBody:
         description: Disc object that needs to be added to the store
         content:
@@ -86,7 +86,7 @@ paths:
       tags:
         - disc
       summary: Add a new disc to the store
-      operationId: adddisc
+      operationId: addDisc
       requestBody:
         description: Disc object that needs to be added to the store
         content:
@@ -109,7 +109,7 @@ paths:
         - disc
       summary: Find disc by ID
       description: Returns a single disc
-      operationId: getdiscById
+      operationId: getDiscById
       parameters:
         - name: discId
           in: path
@@ -133,34 +133,6 @@ paths:
           content: {}
       security:
         - api_key: []
-    delete:
-      tags:
-        - disc
-      summary: Deletes a disc
-      operationId: deletedisc
-      parameters:
-        - name: api_key
-          in: header
-          schema:
-            type: string
-        - name: discId
-          in: path
-          description: disc id to delete
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Disc not found
-          content: {}
-      security:
-        - discstore_auth:
-            - write:discs
-            - read:discs
 components:
   schemas:
     disc:
