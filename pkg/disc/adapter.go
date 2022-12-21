@@ -19,6 +19,9 @@ type servicer interface {
 	ListDisc(context.Context, int64, int64) (discRes, error)
 }
 
+// adapter makes our disc service compatible with the openapi generated one
+// we do this so our service can have typed responses instead of the openapi response
+// body that is simply interface{} (untyped)
 type adapter struct {
 	s servicer
 }
