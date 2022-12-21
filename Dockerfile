@@ -1,6 +1,6 @@
 FROM golang:1.18 as build
 
-WORKDIR /go/src/disc-golf-api
+WORKDIR /go/src/github.com/olivermking/disc-golf-api
 COPY . .
 
 RUN go mod download
