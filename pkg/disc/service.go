@@ -9,10 +9,10 @@ import (
 
 type service struct{}
 
-var _ openapi.DiscApiServicer = &service{}
+var _ servicer = &service{}
 
 func NewService() openapi.DiscApiServicer {
-	return &service{}
+	return &adapter{s: &service{}}
 }
 
 var disc = openapi.Disc{
@@ -30,10 +30,10 @@ var disc = openapi.Disc{
 	PrimaryUse:  "Fairway",
 }
 
-func (s *service) GetDiscById(ctx context.Context, discId int64) (openapi.ImplResponse, error) {
-	return openapi.Response(http.StatusOK, disc), nil
+func (s *service) GetDiscById(ctx context.Context, discId int64) (discRes, error) {
+	return discRes{Code: http.StatusOK, Body: disc}, nil
 }
 
-func (s *service) ListDisc(ctx context.Context, skipToken int64, top int64) (openapi.ImplResponse, error) {
-	return openapi.Response(http.StatusOK, []openapi.Disc{disc}), nil
+func (s *service) ListDisc(ctx context.Context, skipToken int64, top int64) (discsRes, error) {
+	return discsRes{Code: http.StatusOK, Body: []openapi.Disc{disc}}, nil
 }
