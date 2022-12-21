@@ -8,6 +8,7 @@ import (
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
 	"os"
+	"strconv"
 )
 
 const dockerTag = "discgolfapi"
@@ -29,7 +30,18 @@ func Docker() error {
 func Local() error {
 	mg.Deps(Docker)
 
-	if err := sh.RunV("docker", "run", "-t", dockerTag, "./disc-golf-api", "server"); err != nil {
+	if err := ensureDocker(); err != nil {
+		return err
+	}
+
+	port := 8080
+	if err := sh.RunV("docker", "run",
+		"-p", fmt.Sprintf("%[1]d:%[1]d", port),
+		"-t", dockerTag,
+		"./disc-golf-api",
+		"server",
+		"-p", strconv.Itoa(port),
+	); err != nil {
 		return err
 	}
 

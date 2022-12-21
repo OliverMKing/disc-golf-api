@@ -11,7 +11,6 @@
 package openapi
 
 import (
-	"encoding/json"
 	"net/http"
 	"strings"
 
@@ -20,7 +19,7 @@ import (
 
 // DiscApiController binds http requests to an api service and writes the service results to the http response
 type DiscApiController struct {
-	service DiscApiServicer
+	service      DiscApiServicer
 	errorHandler ErrorHandler
 }
 
@@ -50,7 +49,7 @@ func NewDiscApiController(s DiscApiServicer, opts ...DiscApiOption) Router {
 
 // Routes returns all the api routes for the DiscApiController
 func (c *DiscApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"GetDiscById",
 			strings.ToUpper("Get"),
