@@ -1,4 +1,4 @@
-package disc
+package service
 
 import (
 	"context"
@@ -11,7 +11,7 @@ type service struct{}
 
 var _ servicer = &service{}
 
-func NewService() openapi.DiscApiServicer {
+func New() openapi.DiscApiServicer {
 	return &adapter{s: &service{}}
 }
 

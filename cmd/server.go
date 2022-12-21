@@ -9,8 +9,8 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/olivermking/disc-golf-api/pkg/disc"
 	"github.com/olivermking/disc-golf-api/pkg/gen/openapi"
+	"github.com/olivermking/disc-golf-api/pkg/service"
 	"github.com/spf13/cobra"
 )
 
@@ -39,7 +39,7 @@ const (
 
 func RunServer(_ *cobra.Command, _ []string) {
 
-	service := disc.NewService()
+	service := service.New()
 	controller := openapi.NewDiscApiController(service)
 	router := openapi.NewRouter(controller)
 

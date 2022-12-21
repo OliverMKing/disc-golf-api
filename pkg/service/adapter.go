@@ -1,4 +1,4 @@
-package disc
+package service
 
 import (
 	"context"
@@ -16,7 +16,7 @@ type discsRes = resp[[]openapi.Disc]
 
 type servicer interface {
 	GetDiscById(context.Context, int64) (discRes, error)
-	ListDisc(context.Context, int64, int64) (discRes, error)
+	ListDisc(context.Context, int64, int64) (discsRes, error)
 }
 
 // adapter makes our disc service compatible with the openapi generated one
