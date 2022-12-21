@@ -50,59 +50,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/listDisc_200_response'
           description: Successful operation
-      security:
-      - api_key: []
       summary: Get a paginated list of discs
       tags:
       - disc
-    post:
-      operationId: addDisc
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/disc'
-        description: Disc object that needs to be added to the store
-        required: true
-      responses:
-        "405":
-          content: {}
-          description: Invalid input
-      security:
-      - discstore_auth:
-        - write:discs
-        - read:discs
-      summary: Add a new disc to the store
-      tags:
-      - disc
-      x-codegen-request-body-name: body
-    put:
-      operationId: updateDisc
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/disc'
-        description: Disc object that needs to be added to the store
-        required: true
-      responses:
-        "400":
-          content: {}
-          description: Invalid ID supplied
-        "404":
-          content: {}
-          description: Disc not found
-        "405":
-          content: {}
-          description: Validation exception
-      security:
-      - discstore_auth:
-        - write:discs
-        - read:discs
-      summary: Update an existing disc
-      tags:
-      - disc
-      x-codegen-request-body-name: body
   /disc/{discId}:
     get:
       description: Returns a single disc
@@ -130,8 +80,6 @@ paths:
         "404":
           content: {}
           description: Disc not found
-      security:
-      - api_key: []
       summary: Find disc by ID
       tags:
       - disc
@@ -238,16 +186,3 @@ components:
             $ref: '#/components/schemas/disc'
           type: array
       type: object
-  securitySchemes:
-    discstore_auth:
-      flows:
-        implicit:
-          authorizationUrl: http://discstore.swagger.io/oauth/dialog
-          scopes:
-            write:discs: modify discs in your account
-            read:discs: read your discs
-      type: oauth2
-    api_key:
-      in: header
-      name: api_key
-      type: apiKey

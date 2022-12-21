@@ -53,56 +53,6 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/disc"
-      security:
-        - api_key: []
-    put:
-      tags:
-        - disc
-      summary: Update an existing disc
-      operationId: updateDisc
-      requestBody:
-        description: Disc object that needs to be added to the store
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/disc"
-        required: true
-      responses:
-        400:
-          description: Invalid ID supplied
-          content: {}
-        404:
-          description: Disc not found
-          content: {}
-        405:
-          description: Validation exception
-          content: {}
-      security:
-        - discstore_auth:
-            - write:discs
-            - read:discs
-      x-codegen-request-body-name: body
-    post:
-      tags:
-        - disc
-      summary: Add a new disc to the store
-      operationId: addDisc
-      requestBody:
-        description: Disc object that needs to be added to the store
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/disc"
-        required: true
-      responses:
-        405:
-          description: Invalid input
-          content: {}
-      security:
-        - discstore_auth:
-            - write:discs
-            - read:discs
-      x-codegen-request-body-name: body
   /disc/{discId}:
     get:
       tags:
@@ -131,8 +81,6 @@ paths:
         404:
           description: Disc not found
           content: {}
-      security:
-        - api_key: []
 components:
   schemas:
     disc:
@@ -185,16 +133,3 @@ components:
             - Mid Range
             - Fairway Driver
             - Distance Driver
-  securitySchemes:
-    discstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: http://discstore.swagger.io/oauth/dialog
-          scopes:
-            write:discs: modify discs in your account
-            read:discs: read your discs
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header

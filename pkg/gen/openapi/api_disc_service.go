@@ -27,17 +27,6 @@ func NewDiscApiService() DiscApiServicer {
 	return &DiscApiService{}
 }
 
-// AddDisc - Add a new disc to the store
-func (s *DiscApiService) AddDisc(ctx context.Context, body Disc) (ImplResponse, error) {
-	// TODO - update AddDisc with the required logic for this service method.
-	// Add api_disc_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(405, {}) or use other options such as http.Ok ...
-	//return Response(405, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("AddDisc method not implemented")
-}
-
 // GetDiscById - Find disc by ID
 func (s *DiscApiService) GetDiscById(ctx context.Context, discId int64) (ImplResponse, error) {
 	// TODO - update GetDiscById with the required logic for this service method.
@@ -64,21 +53,4 @@ func (s *DiscApiService) ListDisc(ctx context.Context, skipToken int64, top int6
 	//return Response(200, ListDisc200Response{}), nil
 
 	return Response(http.StatusNotImplemented, nil), errors.New("ListDisc method not implemented")
-}
-
-// UpdateDisc - Update an existing disc
-func (s *DiscApiService) UpdateDisc(ctx context.Context, body Disc) (ImplResponse, error) {
-	// TODO - update UpdateDisc with the required logic for this service method.
-	// Add api_disc_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(405, {}) or use other options such as http.Ok ...
-	//return Response(405, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("UpdateDisc method not implemented")
 }

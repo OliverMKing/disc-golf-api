@@ -21,10 +21,8 @@ import (
 // The DiscApiRouter implementation should parse necessary information from the http request,
 // pass the data to a DiscApiServicer to perform the required actions, then write the service results to the http response.
 type DiscApiRouter interface { 
-	AddDisc(http.ResponseWriter, *http.Request)
 	GetDiscById(http.ResponseWriter, *http.Request)
 	ListDisc(http.ResponseWriter, *http.Request)
-	UpdateDisc(http.ResponseWriter, *http.Request)
 }
 
 
@@ -33,8 +31,6 @@ type DiscApiRouter interface {
 // while the service implementation can be ignored with the .openapi-generator-ignore file
 // and updated with the logic required for the API.
 type DiscApiServicer interface { 
-	AddDisc(context.Context, Disc) (ImplResponse, error)
 	GetDiscById(context.Context, int64) (ImplResponse, error)
 	ListDisc(context.Context, int64, int64) (ImplResponse, error)
-	UpdateDisc(context.Context, Disc) (ImplResponse, error)
 }

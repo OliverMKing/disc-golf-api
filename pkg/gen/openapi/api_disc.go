@@ -52,12 +52,6 @@ func NewDiscApiController(s DiscApiServicer, opts ...DiscApiOption) Router {
 func (c *DiscApiController) Routes() Routes {
 	return Routes{ 
 		{
-			"AddDisc",
-			strings.ToUpper("Post"),
-			"/v1/disc",
-			c.AddDisc,
-		},
-		{
 			"GetDiscById",
 			strings.ToUpper("Get"),
 			"/v1/disc/{discId}",
@@ -69,37 +63,7 @@ func (c *DiscApiController) Routes() Routes {
 			"/v1/disc",
 			c.ListDisc,
 		},
-		{
-			"UpdateDisc",
-			strings.ToUpper("Put"),
-			"/v1/disc",
-			c.UpdateDisc,
-		},
 	}
-}
-
-// AddDisc - Add a new disc to the store
-func (c *DiscApiController) AddDisc(w http.ResponseWriter, r *http.Request) {
-	bodyParam := Disc{}
-	d := json.NewDecoder(r.Body)
-	d.DisallowUnknownFields()
-	if err := d.Decode(&bodyParam); err != nil {
-		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
-		return
-	}
-	if err := AssertDiscRequired(bodyParam); err != nil {
-		c.errorHandler(w, r, err, nil)
-		return
-	}
-	result, err := c.service.AddDisc(r.Context(), bodyParam)
-	// If an error occurred, encode the error with the status code
-	if err != nil {
-		c.errorHandler(w, r, err, &result)
-		return
-	}
-	// If no error, encode the body and the result code
-	EncodeJSONResponse(result.Body, &result.Code, w)
-
 }
 
 // GetDiscById - Find disc by ID
@@ -136,30 +100,6 @@ func (c *DiscApiController) ListDisc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	result, err := c.service.ListDisc(r.Context(), skipTokenParam, topParam)
-	// If an error occurred, encode the error with the status code
-	if err != nil {
-		c.errorHandler(w, r, err, &result)
-		return
-	}
-	// If no error, encode the body and the result code
-	EncodeJSONResponse(result.Body, &result.Code, w)
-
-}
-
-// UpdateDisc - Update an existing disc
-func (c *DiscApiController) UpdateDisc(w http.ResponseWriter, r *http.Request) {
-	bodyParam := Disc{}
-	d := json.NewDecoder(r.Body)
-	d.DisallowUnknownFields()
-	if err := d.Decode(&bodyParam); err != nil {
-		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
-		return
-	}
-	if err := AssertDiscRequired(bodyParam); err != nil {
-		c.errorHandler(w, r, err, nil)
-		return
-	}
-	result, err := c.service.UpdateDisc(r.Context(), bodyParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)

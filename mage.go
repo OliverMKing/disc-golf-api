@@ -18,7 +18,7 @@ func Docker() error {
 		return err
 	}
 
-	if err := sh.Run("docker", "build", "-t", dockerTag, "."); err != nil {
+	if err := sh.RunV("docker", "build", "-t", dockerTag, "."); err != nil {
 		return fmt.Errorf("running build: %w", err)
 	}
 
@@ -47,7 +47,7 @@ func Openapi() error {
 		return fmt.Errorf("getting working directory: %w", err)
 	}
 
-	if err := sh.Run("docker", "run",
+	if err := sh.RunV("docker", "run",
 		"--rm",
 		"-v", fmt.Sprintf("/%s:/disc-golf-api", wd),
 		"openapitools/openapi-generator-cli",
