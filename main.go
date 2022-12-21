@@ -1,7 +1,7 @@
 package main
 
 import (
-	"discgolfapi.com/m/cmd"
+	"github.com/olivermking/disc-golf-api/cmd"
 )
 
 func main() {
